@@ -12,7 +12,7 @@ module Blogit
     # = Validations =
     # ===============
 
-    validates :title, presence: true, length: { minimum: 10, maximum: 66 }
+    validates :title, presence: true, length: { minimum: 10, maximum: Blogit.configuration.max_title_length }
 
     validates :body,  presence: true, length: { minimum: 10 }
     
