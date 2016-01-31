@@ -1,10 +1,10 @@
 Blogit::Engine.routes.draw do
 
   # Keep these above the posts resources block
-  get "posts/page/:page" => "posts#index"
-  get "posts/tagged/:tag" => 'posts#tagged', as: :tagged_blog_posts
+  get "/blog/page/:page" => "posts#index"
+  get "/blog/tagged/:tag" => 'posts#tagged', as: :tagged_blog_posts
 
-  resources :posts do
+  resources :posts, :path => "blog" do
     resources :comments, only: [:create, :destroy]
   end
 
