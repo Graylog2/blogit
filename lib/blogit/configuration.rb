@@ -67,12 +67,6 @@ module Blogit
     config_accessor(:posts_per_page) { 5 }
 
     ##
-    # Maximum length of title (default: 155)
-    #
-    # Returns an Integer
-    config_accessor(:max_title_length) { 66 }
-
-    ##
     # If set to true, the comments form will POST and DELETE to the comments
     # controller using AJAX calls.
     #

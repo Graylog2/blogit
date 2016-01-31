@@ -1,6 +1,6 @@
 module Blogit
   class Post < ActiveRecord::Base
-    
+
     require "kaminari"
     require "acts-as-taggable-on"
 
@@ -12,10 +12,10 @@ module Blogit
     # = Validations =
     # ===============
 
-    validates :title, presence: true, length: { minimum: 10, maximum: Blogit.configuration.max_title_length }
+    validates :title, presence: true
 
-    validates :body,  presence: true, length: { minimum: 10 }
-    
+    validates :body,  presence: true
+
     validates :description, presence: Blogit.configuration.show_post_description
 
     validates :blogger_id, presence: true
@@ -42,9 +42,9 @@ module Blogit
     # = Scopes =
     # ==========
 
-    scope :for_index, lambda { |page_no = 1| 
+    scope :for_index, lambda { |page_no = 1|
       active.order("created_at DESC").page(page_no) }
-      
+
     scope :active, lambda { where(state:  Blogit.configuration.active_states ) }
 
 
@@ -54,7 +54,7 @@ module Blogit
     def self.for_feed
       active.order('created_at DESC')
     end
-    
+
     # Finds an active post with given id
     #
     # id - The id of the Post to find
@@ -64,7 +64,7 @@ module Blogit
     def self.active_with_id(id)
       active.find(id)
     end
-    
+
     # ====================
     # = Instance Methods =
     # ====================
@@ -73,11 +73,11 @@ module Blogit
     def published_at
       created_at
     end
-    
+
     def to_param
       "#{id}-#{title.parameterize}"
     end
-    
+
     # The content of the Post to be shown in the RSS feed.
     #
     # Returns description when Blogit.configuration.show_post_description is true
@@ -89,17 +89,17 @@ module Blogit
         body
       end
     end
-    
+
     def comments
       check_comments_config
       super()
     end
-    
+
     def comments=(value)
       check_comments_config
       super(value)
     end
-    
+
 
     # The blogger who wrote this {Post Post's} display name
     #
@@ -123,17 +123,17 @@ module Blogit
         blogger.twitter_username
       end
     end
-    
+
 
     private
 
 
     def check_comments_config
       unless Blogit.configuration.include_comments == :active_record
-        raise RuntimeError, 
+        raise RuntimeError,
           "Posts only allow active record comments (check blogit configuration)"
       end
     end
-    
+
   end
 end
